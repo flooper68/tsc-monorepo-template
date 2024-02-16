@@ -17,6 +17,7 @@ Our setup leverages:
 - [Vite](https://vitejs.dev/) and React for a SPA frontend.
 - [Trpc](https://trpc.io/) for type-safe API routes.
 - [Liquibase](https://www.liquibase.org/) for database migration management.
+- PSQL as a database of choice.
 - Prettier and ESLint for code formatting and linting.
 - Vitest and [Playwright](https://playwright.dev/) for testing.
 - Docker Compose for database setup.
