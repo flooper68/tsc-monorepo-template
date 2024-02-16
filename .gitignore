@@ -1,0 +1,6 @@
+dist
+node_modules
+.nx
+test-results
+.env
+showcase-dist

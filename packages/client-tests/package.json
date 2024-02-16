@@ -1,0 +1,25 @@
+{
+  "name": "@showcase/client-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "npx playwright test",
+    "prepare-ci": "cat .env-ci > .env",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check .",
+    "prepare-playwright": "pnpm exec playwright install"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.37.1",
+    "@showcase/dev-tools": "workspace:*",
+    "dotenv": "^16.4.4",
+    "zod": "^3.22.4"
+  },
+  "nx": {
+    "implicitDependencies": [
+      "@showcase/client"
+    ]
+  }
+}

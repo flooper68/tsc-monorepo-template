@@ -1,0 +1,27 @@
+{
+  "name": "@showcase/server-api-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test-api": "pnpm vitest",
+    "prepare-ci": "cat .env-ci > .env",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@showcase/shared-trpc": "workspace:*",
+    "@showcase/server-feature": "workspace:*",
+    "dotenv": "^16.4.4",
+    "zod": "^3.22.4",
+    "@showcase/dev-tools": "workspace:*",
+    "@trpc/client": "10.45.1",
+    "vitest": "^1.0.0"
+  },
+  "nx": {
+    "implicitDependencies": [
+      "@showcase/server-api"
+    ]
+  }
+}

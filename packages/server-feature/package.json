@@ -1,0 +1,32 @@
+{
+  "name": "@showcase/server-feature",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "modules": "dist/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "start": "node dist/index.js --enable-source-maps",
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --outdir=dist --format=esm --sourcemap",
+    "dev": "pnpm run build && pnpm run build --watch=forever & node --watch --enable-source-maps dist/index.js",
+    "generate": "tsx src/scripts/generate.ts",
+    "test": "vitest",
+    "prepare-ci": "cat .env-ci > .env",
+    "db-migrate": "docker-compose -f docker-compose-migrations.yml up",
+    "db-migrate-ci": "docker-compose -f docker-compose-migrations-ci.yml up",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "dependencies": {
+    "@showcase/db-context": "workspace:*"
+  },
+  "devDependencies": {
+    "@showcase/dev-tools": "workspace:*",
+    "dotenv": "^16.4.4",
+    "tsx": "^4.7.1",
+    "zod": "^3.22.4",
+    "vitest": "^1.0.0"
+  }
+}

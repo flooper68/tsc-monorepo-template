@@ -1,0 +1,39 @@
+{
+  "name": "showcase",
+  "version": "1.0.0",
+  "repository": "git@github.com:flooper68/showcase.git",
+  "author": "flooper68 <premysl.ciompa@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "packageManager": "pnpm@8.14.0",
+  "engines": {
+    "node": "21.6.1"
+  },
+  "scripts": {
+    "start": "cd ./packages/server-api && pnpm run start",
+    "dev": "pnpm nx run-many --target=dev --parallel=50",
+    "build": "pnpm nx run-many --target=build",
+    "test": "export CI=true && pnpm nx run-many --target=test",
+    "pretty": "nx run-many --target=pretty",
+    "pretty-check": "nx run-many --target=pretty-check",
+    "lint": "nx run-many --target=lint",
+    "type-check": "nx run-many --target=type-check",
+    "prepare-ci": "nx run-many --target=prepare-ci",
+    "graph": "nx graph",
+    "check": "pnpm run pretty && pnpm run lint && pnpm run type-check",
+    "clean": "find . -name dist ! -path \"**/node_modules/*\" -type d -exec rm -rf {} \\;",
+    "db-cli": "docker exec -it showcase-psql-dev psql -U showcase",
+    "db-start": "docker-compose -f docker-compose.yml up -d"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "esbuild": "^0.20.0",
+    "@types/node": "^20.11.17",
+    "nx": "18.0.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

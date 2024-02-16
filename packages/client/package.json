@@ -1,0 +1,28 @@
+{
+  "name": "@showcase/client",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "dependencies": {
+    "@showcase/shared-trpc": "workspace:*",
+    "@tanstack/react-query": "^4.29.14",
+    "@trpc/client": "10.45.1",
+    "@trpc/react-query": "10.45.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@showcase/dev-tools": "workspace:*",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.0"
+  }
+}

@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  showcase-psql-dev:
+    image: postgres:16.2
+    container_name: showcase-psql-dev
+    ports:
+      - '5444:5432'
+    environment:
+      POSTGRES_DB: showcase
+      POSTGRES_USER: showcase
+      POSTGRES_PASSWORD: showcase
+    networks:
+      - showcase-dev-net
+  showcase-app:
+    image: showcase
+    container_name: showcase-app
+    ports:
+      - '3003:3003'
+    env_file: .env-app-ci
+    networks:
+      - showcase-dev-net
+networks:
+  showcase-dev-net:

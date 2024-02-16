@@ -1,0 +1,86 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2.0
+jobs:
+  main:
+    working_directory: ~/showcase
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large
+    steps:
+      - checkout
+      - node/install:
+          node-version: "21.6.1"
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Start DB
+          command: docker-compose -f ./packages/ci-tools/docker-compose-ci.yml up showcase-psql-dev
+          background: true
+
+      - run:
+          name: Install pnpm
+          command: npm install -g pnpm
+      - run:
+          name: Install npm packages
+          command: pnpm install --frozen-lockfile
+      - run:
+          name: Build workspace packages
+          command: pnpm run build
+      - run:
+          name: Prepare CI environment
+          command: pnpm run prepare-ci
+      - run:
+          name: Lint
+          command: pnpm nx run-many --target=lint
+      - run:
+          name: Check prettier
+          command: pnpm nx run-many --target=pretty-check
+      - run:
+          name: Type check
+          command: pnpm nx run-many --target=type-check
+      - run:
+          name: Run unit tests
+          command: pnpm run test
+      - run:
+          name: Migrate DB
+          command: pnpm nx run @showcase/server-feature:db-migrate-ci --verbose
+      - run:
+          name: Run Server Feature Integration tests
+          command: pnpm nx run @showcase/server-feature:generate && pnpm nx run @showcase/server-feature-tests:test-int
+      - run:
+          name: Build docker image
+          command: pnpm nx run @showcase/ci-tools:build-docker
+      - run:
+          name: Start Showcase app
+          command: docker-compose -f ./packages/ci-tools/docker-compose-ci.yml up showcase-app
+          background: true
+      - run:
+          name: Wait on http://127.0.0.1:3003
+          command: npx wait-on http://127.0.0.1:3003
+      - run:
+          name: Run Api tests
+          command: pnpm nx run @showcase/server-api-tests:test-api
+      - run:
+          name: Prepare Playwright
+          command: pnpm nx run @showcase/client-tests:prepare-playwright
+      - run:
+          name: Run @showcase/client-tests
+          command: pnpm nx run @showcase/client-tests:e2e
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+      - save_cache:
+          name: Save pnpm Package Cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+workflows:
+  version: 2
+  build:
+    jobs:
+      - main

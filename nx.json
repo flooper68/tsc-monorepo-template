@@ -1,0 +1,25 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "type-check",
+          "lint",
+          "test",
+          "pretty-check",
+          "pretty",
+          "dev"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  },
+  "defaultBase": "main",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+}

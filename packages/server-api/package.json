@@ -1,0 +1,26 @@
+{
+  "name": "@showcase/server-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js --enable-source-maps",
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --outdir=dist --format=esm --sourcemap",
+    "dev": "pnpm run build && pnpm run build --watch=forever & node --watch --enable-source-maps dist/index.js",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "dependencies": {
+    "@fastify/static": "^7.0.1",
+    "@showcase/server-feature": "workspace:*",
+    "@showcase/shared-trpc": "workspace:*",
+    "@trpc/server": "10.45.1",
+    "dotenv": "^16.4.4",
+    "fastify": "^4.26.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@showcase/dev-tools": "workspace:*"
+  }
+}

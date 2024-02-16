@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  showcase-liquibase:
+    container_name: showcase-liquibase
+    image: liquibase/liquibase
+    command: update
+    volumes:
+      - ./migrations/changelog.sql:/liquibase/changelog.sql
+    networks:
+      - ci-tools_showcase-dev-net
+    env_file: .env
+    environment:
+      LIQUIBASE_COMMAND_CHANGELOG_FILE: changelog.sql
+networks:
+  ci-tools_showcase-dev-net:
+    external: true

@@ -1,0 +1,16 @@
+{
+  "name": "@showcase/ci-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-docker": "tsx ./src/build-docker.ts",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@showcase/dev-tools": "workspace:*",
+    "tsx": "^4.7.1"
+  }
+}

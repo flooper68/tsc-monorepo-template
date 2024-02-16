@@ -1,0 +1,23 @@
+{
+  "name": "@showcase/shared-trpc",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --packages=external --platform=node --outdir=dist --format=esm --sourcemap",
+    "dev": "pnpm run build && pnpm run build --watch=forever",
+    "type-check": "tsc --noEmit",
+    "lint": "export ESLINT_USE_FLAT_CONFIG=true && eslint .",
+    "pretty": "prettier --write .",
+    "pretty-check": "prettier --check ."
+  },
+  "dependencies": {
+    "@trpc/server": "10.45.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@showcase/dev-tools": "workspace:*"
+  }
+}
