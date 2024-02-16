@@ -8,10 +8,10 @@ services:
     volumes:
       - ./migrations/changelog.sql:/liquibase/changelog.sql
     networks:
-      - showcase_showcase-dev-net
+      - tsc-monorepo-template_showcase-dev-net
     env_file: .env
     environment:
       LIQUIBASE_COMMAND_CHANGELOG_FILE: changelog.sql
 networks:
-  showcase_showcase-dev-net:
+  tsc-monorepo-template_showcase-dev-net:
     external: true
